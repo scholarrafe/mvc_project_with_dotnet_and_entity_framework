@@ -1,0 +1,50 @@
+USE [app_database]
+GO
+/****** Object:  Table [dbo].[Class]    Script Date: 2/13/2024 4:34:04 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Class](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [nvarchar](255) NOT NULL,
+	[CreatedDate] [datetime] NULL,
+	[ModificationDate] [datetime] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Student]    Script Date: 2/13/2024 4:34:04 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Student](
+	[Id] [uniqueidentifier] NOT NULL,
+	[Name] [nvarchar](255) NOT NULL,
+	[Gender] [int] NULL,
+	[DOB] [date] NULL,
+	[ClassId] [int] NULL,
+	[CreatedDate] [datetime] NULL,
+	[ModificationDate] [datetime] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[Class] ADD  DEFAULT (getdate()) FOR [CreatedDate]
+GO
+ALTER TABLE [dbo].[Class] ADD  DEFAULT (getdate()) FOR [ModificationDate]
+GO
+ALTER TABLE [dbo].[Student] ADD  DEFAULT (newid()) FOR [Id]
+GO
+ALTER TABLE [dbo].[Student] ADD  DEFAULT (getdate()) FOR [CreatedDate]
+GO
+ALTER TABLE [dbo].[Student] ADD  DEFAULT (getdate()) FOR [ModificationDate]
+GO
+ALTER TABLE [dbo].[Student]  WITH CHECK ADD FOREIGN KEY([ClassId])
+REFERENCES [dbo].[Class] ([Id])
+GO
